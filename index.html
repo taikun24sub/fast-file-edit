@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>Fast File Edit</title>
+  </head>
+  <body>
+    <input id="input-file" type="file">
+    <button onclick='read();'>Read</button><button onclick='write();'>Write</button>
+    <textarea id='inp' style='width:100vw;height:90vh;'>
+      
+    </textarea>
+    <script>
+      const inp = document.getElementById('inp');
+      const inf = document.getElementById('input-file');
+      function read(){ 
+        var reader = new FileReader();
+        reader.readAsDataURL(inf.files[0]);
+        reader.onload = function() {
+          inp.value = reader.result
+        );
+      }
+        function write(){
+          const a = document.createElement("a");
+        const url = window.URL;
+        a.href = url.createObjectURL(new Blob());
+        document.body.appendChild(a);
+        a.style = "display: none";
+          var filename = fullPath.replace(/^.*[\\/]/, '')
+        a.download = filename + ".pdf";
+        a.click();
+        }
+    </script>
+  </body>
+</html>
