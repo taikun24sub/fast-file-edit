@@ -12,13 +12,18 @@
       const inp = document.getElementById('inp');
       const inf = document.getElementById('input-file');
       function read(){ 
+        try{
         var reader = new FileReader();
         reader.readAsDataURL(inf.files[0]);
         reader.onload = function() {
           inp.value = reader.result
         );
+        }catch(e){
+          inp.value = e;
+        }
       }
         function write(){
+          try{
           const a = document.createElement("a");
         const url = window.URL;
         a.href = url.createObjectURL(new Blob());
@@ -27,6 +32,9 @@
           var filename = fullPath.replace(/^.*[\\/]/, '')
         a.download = filename + ".pdf";
         a.click();
+          }catch(e){
+            inp.value = e;
+          }
         }
     </script>
   </body>
