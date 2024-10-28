@@ -5,6 +5,7 @@
   <body>
     <input id="input-file" type="file">
     <button onclick='read();'>Read</button><button onclick='write();'>Write</button>
+    <p>v1.0.0b</p>
     <textarea id='inp' style='width:100vw;height:90vh;'>
       
     </textarea>
@@ -14,10 +15,11 @@
       function read(){ 
         try{
         var reader = new FileReader();
-        reader.readAsDataURL(inf.files[0]);
-        reader.onload = function() {
+          reader.onload = function() {
           inp.value = reader.result
         );
+        reader.readAsDataURL(inf.files[0]);
+        
         }catch(e){
           inp.value = e;
         }
