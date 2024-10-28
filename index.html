@@ -5,8 +5,8 @@
 </head>
 <body>
     <input id="input-file" type="file">
-    <button onclick='read();'>Read</button><button onclick='write();'>Write</button>
-    <p>v1.0.0c</p>
+    <button onclick='read();'>Read</button><button onclick='fwrite();'>Write</button>
+    <p>v1.0.0d</p>
     <textarea id='inp' style='width:100vw;height:90vh;'></textarea>
     <script>
         const inp = document.getElementById('inp');
@@ -24,7 +24,7 @@
             }
         }
 
-        function write() {
+        function fwrite() {
             try {
                 const blob = new Blob([inp.value], { type: 'text/plain' });
                 const url = URL.createObjectURL(blob);
