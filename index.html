@@ -6,7 +6,7 @@
 <body>
     <button id="input-file" type="file" onclick='slc();'>Select File</button>
     <button onclick='read();'>Read</button><button onclick='fwrite();'>Write</button>
-    <p>v1.1.0c</p>
+    <p>v1.1.0d</p>
     <textarea id='inp' style='width:100vw;height:90vh;'></textarea>
     <script>
         const inp = document.getElementById('inp');
@@ -14,19 +14,21 @@
         async function slc(){
             handler = await showOpenFilePicker();
         }
-        document.addEventListener('dragover', event => event.preventDefault())
-document.addEventListener('drop', async event => {
-  event.preventDefault()
+        document.addEventListener('dragover', event => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'copy'; // ドロップ効果を明示的に指定
+});
 
-  for (let item of event.dataTransfer.items) {
-    let _handle = await item.getAsFileSystemHandle()
-    if (_handle.kind === 'directory') {
-    } else {
-      handle = _handle;
+document.addEventListener('drop', async (event) => {
+    event.preventDefault();
+
+    const files = Array.from(event.dataTransfer.files);
+    if (files.length > 0) {
+        handler = files[0]; // 最初のファイルを使用
+        read();
         alert('Loaded!');
     }
-  }
-})
+});
         function read() {
             try {
                 const reader = new FileReader();
