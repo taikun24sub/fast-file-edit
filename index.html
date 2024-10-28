@@ -1,43 +1,42 @@
+<!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Fast File Edit</title>
-  </head>
-  <body>
+</head>
+<body>
     <input id="input-file" type="file">
     <button onclick='read();'>Read</button><button onclick='write();'>Write</button>
-    <p>v1.0.0b</p>
-    <textarea id='inp' style='width:100vw;height:90vh;'>
-      
-    </textarea>
+    <p>v1.0.0c</p>
+    <textarea id='inp' style='width:100vw;height:90vh;'></textarea>
     <script>
-      const inp = document.getElementById('inp');
-      const inf = document.getElementById('input-file');
-      function read(){ 
-        try{
-        var reader = new FileReader();
-          reader.onload = function() {
-          inp.value = reader.result
-        );
-        reader.readAsDataURL(inf.files[0]);
-        
-        }catch(e){
-          inp.value = e;
+        const inp = document.getElementById('inp');
+        const inf = document.getElementById('input-file');
+
+        function read() {
+            try {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    inp.value = reader.result;
+                };
+                reader.readAsText(inf.files[0]);
+            } catch (e) {
+                inp.value = `Error reading file: ${e.message}`;
+            }
         }
-      }
-        function write(){
-          try{
-          const a = document.createElement("a");
-        const url = window.URL;
-        a.href = url.createObjectURL(new Blob());
-        document.body.appendChild(a);
-        a.style = "display: none";
-          var filename = fullPath.replace(/^.*[\\/]/, '')
-        a.download = filename + ".pdf";
-        a.click();
-          }catch(e){
-            inp.value = e;
-          }
+
+        function write() {
+            try {
+                const blob = new Blob([inp.value], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = inf.files[0].name;
+                a.click();
+                URL.revokeObjectURL(url);
+            } catch (e) {
+                inp.value = `Error writing file: ${e.message}`;
+            }
         }
     </script>
-  </body>
+</body>
 </html>
