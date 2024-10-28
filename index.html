@@ -4,35 +4,33 @@
     <title>Fast File Edit</title>
 </head>
 <body>
-    <input id="input-file" type="file">
+    <button id="input-file" type="file" onclick='slc();'>
     <button onclick='read();'>Read</button><button onclick='fwrite();'>Write</button>
-    <p>v1.0.0d</p>
+    <p>v1.1.0a</p>
     <textarea id='inp' style='width:100vw;height:90vh;'></textarea>
     <script>
         const inp = document.getElementById('inp');
-        const inf = document.getElementById('input-file');
-
+        let handler;
+        async function slc(){
+            handler = await showOpenFilePicker();
+        }
         function read() {
             try {
                 const reader = new FileReader();
                 reader.onload = () => {
                     inp.value = reader.result;
                 };
-                reader.readAsText(inf.files[0]);
+                reader.readAsText(handler.getFile());
             } catch (e) {
                 inp.value = `Error reading file: ${e.message}`;
             }
         }
 
-        function fwrite() {
+        async function fwrite() {
             try {
-                const blob = new Blob([inp.value], { type: 'text/plain' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = inf.files[0].name;
-                a.click();
-                URL.revokeObjectURL(url);
+                let writableStream = await handler.createWritable()
+                await writableStream.write(inp.value)
+                await writableStream.close()
             } catch (e) {
                 inp.value = `Error writing file: ${e.message}`;
             }
