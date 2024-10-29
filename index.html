@@ -6,7 +6,7 @@
 <body>
     <button id="input-file" type="file" onclick='slc();'>Select File</button>
     <button onclick='read();'>Read</button><button onclick='fwrite();'>Write</button>
-    <p>v1.1.0h</p>
+    <p>v1.1.0i</p>
     <textarea id='inp' style='width:100vw;height:90vh;'></textarea>
     <script>
         const inp = document.getElementById('inp');
@@ -19,12 +19,12 @@
     event.dataTransfer.dropEffect = 'copy'; // ドロップ効果を明示的に指定
 });
 
-document.addEventListener('drop', async (event) => {
+document.addEventListener('drop', (event) => {
     event.preventDefault();
 try{
     const files = Array.from(event.dataTransfer.files);
     if (files.length > 0) {
-        handler = await files[0].getAsFileSystemHandle(); // 最初のファイルを使用
+        handler = files[0].webkitGetAsEntry()??files[0].getAsEntry();
         read();
         alert('Loaded!');
     }
