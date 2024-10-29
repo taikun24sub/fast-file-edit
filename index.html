@@ -6,7 +6,7 @@
 <body>
     <button id="input-file" type="file" onclick='slc();'>Select File</button>
     <button onclick='read();'>Read</button><button onclick='fwrite();'>Write</button>
-    <p>v1.1.0f</p>
+    <p>v1.1.0g</p>
     <textarea id='inp' style='width:100vw;height:90vh;'></textarea>
     <script>
         const inp = document.getElementById('inp');
@@ -21,13 +21,16 @@
 
 document.addEventListener('drop', async (event) => {
     event.preventDefault();
-
+try{
     const files = Array.from(event.dataTransfer.items);
     if (files.length > 0) {
         handler = await files[0].getAsFileSystemHandle(); // 最初のファイルを使用
         read();
         alert('Loaded!');
     }
+}catch(e){
+    inp.value = `Error loading file: ${e.message}`;
+}
 });
         function read() {
             try {
