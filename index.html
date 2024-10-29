@@ -6,7 +6,7 @@
 <body>
     <button id="input-file" type="file" onclick='slc();'>Select File</button>
     <button onclick='read();'>Read</button><button onclick='fwrite();'>Write</button>
-    <p>v1.1.0d</p>
+    <p>v1.1.0e</p>
     <textarea id='inp' style='width:100vw;height:90vh;'></textarea>
     <script>
         const inp = document.getElementById('inp');
@@ -24,7 +24,7 @@ document.addEventListener('drop', async (event) => {
 
     const files = Array.from(event.dataTransfer.files);
     if (files.length > 0) {
-        handler = files[0]; // 最初のファイルを使用
+        handler = files[0].getAsFileSystemHandle(); // 最初のファイルを使用
         read();
         alert('Loaded!');
     }
