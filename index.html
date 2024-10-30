@@ -4,17 +4,17 @@
     <title>Fast File Edit</title>
 </head>
 <body>
-    <input id="input-file" type="file" onclick='slc();'>Select File</input>
+    <input id="input-file" type="file" onclick='slc();'></input>
     <button onclick='read();'>Read</button><button onclick='fwrite();'>Write</button>
-    <p>v1.2.0a</p>
+    <p>v1.2.0b</p>
     <textarea id='inp' style='width:100vw;height:90vh;'></textarea>
     <script>
         const inp = document.getElementById('inp');
         let handler;
         let file;
-        async function slc(){
-            // handler = await showOpenFilePicker();
-        }
+        document.getElementById('inp-file').addEventListner('change',(e)=>{
+            file=document.getElementById('inp-file').files[0];
+        });
         document.addEventListener('dragover', event => {
     event.preventDefault();
     event.dataTransfer.dropEffect = 'copy'; // ドロップ効果を明示的に指定
@@ -25,8 +25,8 @@ document.addEventListener('drop', (event) => {
 try{
     const files = Array.from(event.dataTransfer.items);
     if (files.length > 0) {
-        handle = files[0].webkitGetAsEntry()??files[0].getAsEntry();
-        file = handle.file();
+        handler = files[0].webkitGetAsEntry()??files[0].getAsEntry();
+        file = handler.file();
         read();
         alert('Loaded!');
     }
