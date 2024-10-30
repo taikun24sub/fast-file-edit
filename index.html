@@ -6,7 +6,7 @@
 <body>
     <button id="input-file" type="file" onclick='slc();'>Select File</button>
     <button onclick='read();'>Read</button><button onclick='fwrite();'>Write</button>
-    <p>v1.1.0i</p>
+    <p>v1.1.1a</p>
     <textarea id='inp' style='width:100vw;height:90vh;'></textarea>
     <script>
         const inp = document.getElementById('inp');
@@ -22,7 +22,7 @@
 document.addEventListener('drop', (event) => {
     event.preventDefault();
 try{
-    const files = Array.from(event.dataTransfer.files);
+    const files = Array.from(event.dataTransfer.items);
     if (files.length > 0) {
         handler = files[0].webkitGetAsEntry()??files[0].getAsEntry();
         read();
